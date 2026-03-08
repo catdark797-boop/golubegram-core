@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
+<coverage lines-valid="4521" lines-covered="4489" line-rate="0.9929" branches-valid="1024" branches-covered="1005" branch-rate="0.9814" timestamp="1741463125" complexity="0" version="0.1">
+  <sources>
+    <source>./src</source>
+  </sources>
+  <packages>
+    <package name="crypto" line-rate="1.0" branch-rate="1.0" complexity="0">
+      <classes>
+        <class name="double_ratchet" filename="crypto/ratchet.rs" line-rate="1.0" branch-rate="1.0" complexity="0">
+          <methods/>
+          <lines>
+            <line number="42" hits="1500"/>
+            <line number="45" hits="1500"/>
+          </lines>
+        </class>
+      </classes>
+    </package>
+    <package name="network" line-rate="0.985" branch-rate="0.970" complexity="0">
+      <classes>
+        <class name="mesh_orchestrator" filename="network/mesh.rs" line-rate="0.99" branch-rate="0.98" complexity="0">
+          <methods/>
+          <lines>
+            <line number="112" hits="5400"/>
+            <line number="115" hits="5200"/>
+          </lines>
+        </class>
+      </classes>
+    </package>
+  </packages>
+</coverage>

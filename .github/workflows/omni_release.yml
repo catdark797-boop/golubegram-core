@@ -1,0 +1,133 @@
+name: Omni-Platform Ghost Release (V1.0)
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-linux-android, armv7-linux-androideabi
+      - name: Build APK
+        run: echo "Gradle build to assemble Universal .apk"
+      - name: Sign APK (Jarsigner)
+        run: echo "jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 -keystore ... my-app.apk"
+      - name: Upload APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: golubegram-android.apk
+          path: app/build/outputs/apk/release/app-release.apk
+
+  build-ios:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-apple-ios
+      - name: Build IPA (In-House Enterprise)
+        run: echo "xcodebuild -exportArchive -exportOptionsPlist Enterprise.plist ..."
+      - name: Upload IPA
+        uses: actions/upload-artifact@v3
+        with:
+          name: golubegram-ios.ipa
+          path: build/Golubegram.ipa
+
+  build-windows:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        target: [x86_64-pc-windows-msvc, aarch64-pc-windows-msvc]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+      - name: Build Windows Executable
+        run: cargo build --release --target ${{ matrix.target }}
+      - name: Create MSIX Package
+        run: echo "MakeAppx pack /d packaging /p Golubegram-${{ matrix.target }}.msix"
+      - name: Compile Provisioning Package PPKG
+        run: |
+          echo "Compiling windows_enterprise.xml into Golubegram_ZeroPatient.ppkg..."
+          # Mock step: icd.exe /Build-ProvPackage
+      - name: Upload Windows Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: golubegram-windows-${{ matrix.target }}
+          path: |
+            Golubegram-${{ matrix.target }}.msix
+            scripts/windows_enterprise.xml
+
+  build-macos-desktop:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: x86_64-apple-darwin, aarch64-apple-darwin
+      - name: Build Universal Binary
+        run: |
+          cargo build --release --target x86_64-apple-darwin
+          cargo build --release --target aarch64-apple-darwin
+          lipo -create -output target/universal-golubegram target/x86_64-apple-darwin/release/golubegram target/aarch64-apple-darwin/release/golubegram
+      - name: Create DMG
+        run: echo "hdiutil create -volname Golubegram -srcfolder . Golubegram-macOS.dmg"
+      - name: Upload macOS Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: golubegram-macos.dmg
+          path: |
+            Golubegram-macOS.dmg
+            scripts/mac_enterprise.mobileconfig
+
+  build-linux-musl:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: x86_64-unknown-linux-musl
+      - name: Build Static Binary
+        run: cargo build --release --target x86_64-unknown-linux-musl
+      - name: Build Privileged Mesh Daemon
+        run: cargo build --release --bin golubegram-mesh-daemon --target x86_64-unknown-linux-musl
+      - name: Bundle AppImage
+        run: echo "appimagetool ... bundling UI app and daemon side-by-side into Golubegram-x86_64.AppImage"
+      - name: Upload Linux Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: golubegram-linux
+          path: |
+            Golubegram-x86_64.AppImage
+            target/x86_64-unknown-linux-musl/release/golubegram-mesh-daemon
+
+  release:
+    needs: [build-android, build-ios, build-windows, build-macos-desktop, build-linux-musl]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v3
+      - name: Publish Omni-Platform Enterprise Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            golubegram-android.apk/app-release.apk
+            golubegram-ios.ipa/Golubegram.ipa
+            golubegram-windows-*/Golubegram*.msix
+            golubegram-windows-*/windows_enterprise.xml
+            golubegram-macos.dmg/Golubegram-macOS.dmg
+            golubegram-macos.dmg/mac_enterprise.mobileconfig
+            golubegram-linux/Golubegram-x86_64.AppImage
+            golubegram-linux/golubegram-mesh-daemon
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

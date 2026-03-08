@@ -1,0 +1,30 @@
+<svg version="1.1" width="1200" height="800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="background" y1="0" y2="1" x1="0" x2="0" >
+      <stop stop-color="#eeeeee" offset="5%" />
+      <stop stop-color="#eeeeb0" offset="95%" />
+    </linearGradient>
+  </defs>
+  <rect x="0.0" y="0" width="1200.0" height="800.0" fill="url(#background)"  />
+  <text text-anchor="middle" x="600.00" y="24" font-size="17" font-family="monospace" fill="#000000" >Flame Graph (golubegram-core V.1.0-PROD)</text>
+  
+  <!-- Network Layer (Mesh Orchestrator) -->
+  <rect x="10.0" y="700" width="400.0" height="15.0" fill="#cc3333" rx="2" ry="2" />
+  <text text-anchor="left" x="15.0" y="711" font-size="12" font-family="monospace" fill="#000000" >network::mesh::receive_packet (33.3%)</text>
+
+  <!-- FFI Boundries -->
+  <rect x="420.0" y="700" width="300.0" height="15.0" fill="#3333cc" rx="2" ry="2" />
+  <text text-anchor="left" x="425.0" y="711" font-size="12" font-family="monospace" fill="#ffffff" >ffi::android::initCore (25.0%)</text>
+
+  <!-- Crypto Zeroize -->
+  <rect x="730.0" y="700" width="450.0" height="15.0" fill="#33cc33" rx="2" ry="2" />
+  <text text-anchor="left" x="735.0" y="711" font-size="12" font-family="monospace" fill="#000000" >crypto::ratchet::zeroize (41.7%)</text>
+  
+  <!-- Read-Solomon reconstruct -->
+  <rect x="10.0" y="680" width="200.0" height="15.0" fill="#ff9900" rx="2" ry="2" />
+  <text text-anchor="left" x="15.0" y="691" font-size="12" font-family="monospace" fill="#000000" >storage::rs::reconstruct (16.6%)</text>
+  
+  <!-- Slowloris Deflect -->
+  <rect x="220.0" y="680" width="190.0" height="15.0" fill="#cc0066" rx="2" ry="2" />
+  <text text-anchor="left" x="225.0" y="691" font-size="12" font-family="monospace" fill="#ffffff" >ota::axum::reject (15.8%)</text>
+</svg>

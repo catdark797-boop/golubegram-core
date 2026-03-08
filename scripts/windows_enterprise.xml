@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WindowsCustomizations>
+  <PackageConfig xmlns="urn:schemas-Microsoft-com:Windows-ICD-Package-Config.v1.0">
+    <ID>{00000000-0000-0000-0000-000000000000}</ID>
+    <Name>GolubegramOfflineNode</Name>
+    <Version>1.0</Version>
+    <OwnerType>ITAdmin</OwnerType>
+    <Rank>0</Rank>
+  </PackageConfig>
+  <Settings xmlns="urn:schemas-microsoft-com:windows-provisioning">
+    <!-- 1. Install Swarm Root Authority to Trusted Root -->
+    <Customizations>
+      <Common>
+        <Certificates>
+          <RootCertificates>
+            <Certificate CertificateName="SwarmRootCA.cer">
+              <Path>CERTPATH</Path>
+            </Certificate>
+          </RootCertificates>
+        </Certificates>
+        <!-- 2. Sideload the MSIX app package silently -->
+        <UniversalAppInstall>
+          <DeviceContextApp>
+            <Application ApplicationId="GolubegramMSIX">
+              <AppxPackageName>Golubegram.msix</AppxPackageName>
+              <AllowToRunInBackground>true</AllowToRunInBackground>
+            </Application>
+          </DeviceContextApp>
+        </UniversalAppInstall>
+      </Common>
+    </Customizations>
+  </Settings>
+</WindowsCustomizations>

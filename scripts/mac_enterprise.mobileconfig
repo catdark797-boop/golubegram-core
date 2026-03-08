@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PayloadContent</key>
+	<array>
+		<!-- 1. Install Root CA into System Keychain -->
+		<dict>
+			<key>PayloadCertificateFileName</key>
+			<string>SwarmRootCA.cer</string>
+			<key>PayloadContent</key>
+			<data>
+			<!-- Base64 encoded DER certificate goes here -->
+			</data>
+			<key>PayloadDescription</key>
+			<string>Installs the Swarm Root Authority</string>
+			<key>PayloadDisplayName</key>
+			<string>Swarm Corporate Root CA</string>
+			<key>PayloadIdentifier</key>
+			<string>com.swarm.rootca</string>
+			<key>PayloadType</key>
+			<string>com.apple.security.root</string>
+			<key>PayloadUUID</key>
+			<string>F08FBE1B-AAAA-4A3C-BBBB-4E0D9C117AC6</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+		</dict>
+		<!-- 2. Gatekeeper / XProtect Exclusions (SystemPolicyRule) -->
+		<dict>
+			<key>PayloadDescription</key>
+			<string>Allows Golubegram to run without Apple Developer ID</string>
+			<key>PayloadDisplayName</key>
+			<string>Gatekeeper Exceptions</string>
+			<key>PayloadIdentifier</key>
+			<string>com.swarm.gatekeeper</string>
+			<key>PayloadType</key>
+			<string>com.apple.syspolicy.control</string>
+			<key>PayloadUUID</key>
+			<string>E17C2D3A-CCCC-4D5E-DDDD-5F1E0D228BD7</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+			<key>AllowedApplications</key>
+			<array>
+				<dict>
+					<key>BundleID</key>
+					<string>com.swarm.golubegram</string>
+					<key>CodeRequirement</key>
+					<string>identifier "com.swarm.golubegram"</string>
+				</dict>
+			</array>
+		</dict>
+	</array>
+	<key>PayloadDescription</key>
+	<string>Configures macOS for Golubegram Core execution (Offline Node).</string>
+	<key>PayloadDisplayName</key>
+	<string>Golubegram Enterprise Node Configuration</string>
+	<key>PayloadIdentifier</key>
+	<string>com.swarm.golubegram.mdm</string>
+	<key>PayloadOrganization</key>
+	<string>Swarm Root Authority</string>
+	<key>PayloadRemovalDisallowed</key>
+	<false/>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadUUID</key>
+	<string>D96E1D2A-EEEE-4E6F-FFFF-6F2F1E339CE8</string>
+	<key>PayloadVersion</key>
+	<integer>1</integer>
+</dict>
+</plist>

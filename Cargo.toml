@@ -1,0 +1,64 @@
+[package]
+name = "golubegram-core"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "staticlib", "rlib"]
+
+[dependencies]
+# Async Runtime & Web Framework (OTA)
+tokio = { version = "1.28", features = ["full"] }
+axum = "0.7"
+hyper = "1.0"
+
+# TLS & Certs
+rustls = "0.23"
+tokio-rustls = "0.26"
+rcgen = "0.13"
+
+# Mobile FFI Bridges
+jni = "0.21"
+libc = "0.2"
+
+# Security (Ephemeral Keys for Double Ratchet)
+ed25519-dalek = "2.1"
+x25519-dalek = "2.0"
+rand = "0.8"
+sha2 = "0.10"
+zeroize = { version = "1.7", features = ["zeroize_derive"] }
+
+# Storage
+reed-solomon-erasure = "6.0"
+
+# Zero-Hardware Sensors
+qrcode = "0.12"     # 2D Matrix Generation for Optical Link
+base64 = "0.21"
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Utils
+chrono = "0.4"
+bytes = "1.5"
+lazy_static = "1.4"
+tracing = "0.1"
+
+[dev-dependencies]
+criterion = "0.5"
+
+[[bench]]
+name = "crypto_throughput"
+harness = false
+
+[profile.release]
+opt-level = "z"        # Optimize for size
+lto = true             # Link Time Optimization
+codegen-units = 1      # Maximize size reduction
+panic = "abort"        # Remove panic unwinding
+strip = true           # Strip debug symbols
+
+[[bin]]
+name = "cat_dark-anchor"
+path = "src/bin/anchor.rs"
