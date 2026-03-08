@@ -1,0 +1,5 @@
+docs/tactical/
+tools/anchor_provisioning/
+build_tactical_offline.sh
+*.enc
+TACTICAL_WHITEPAPER.md

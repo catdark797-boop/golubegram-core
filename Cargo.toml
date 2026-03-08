@@ -59,14 +59,6 @@ codegen-units = 1      # Maximize size reduction
 panic = "abort"        # Remove panic unwinding
 strip = true           # Strip debug symbols
 
-[profile.tactical_monolith]
-inherits = "release"
-opt-level = "s"        # Balance size and speed for GIS math
-lto = "fat"            # Maximum cross-crate optimization
-panic = "abort"
-strip = true
-debug = 0              # Zero debug info for OPSEC
-
 [[bin]]
 name = "cat_dark-anchor"
 path = "src/bin/anchor.rs"
