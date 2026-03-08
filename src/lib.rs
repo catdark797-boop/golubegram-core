@@ -7,10 +7,12 @@ pub mod ota;
 pub mod ffi;
 pub mod billing;
 pub mod crypto;
+pub mod network;
 pub mod ui;
 pub mod ai;
 pub mod sensors;
 pub mod features;
+pub mod security;
 
 /// Core initialization for Golubegram V1.0 (Ghost Release)
 pub fn init_core() {

@@ -9,6 +9,7 @@ pub mod router;
 pub mod burst;
 pub mod burn_protocol;
 pub mod anti_trace;
+pub mod battery;
 pub mod anchor;
 
 // Main network state machine and orchestration
