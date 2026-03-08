@@ -1,0 +1,16 @@
+solid anchor_case
+  facet normal 0 0 1
+    outer loop
+      vertex 0 0 24.5
+      vertex 94 0 24.5
+      vertex 94 65 24.5
+    endloop
+  endfacet
+  facet normal 0 0 1
+    outer loop
+      vertex 0 0 24.5
+      vertex 94 65 24.5
+      vertex 0 65 24.5
+    endloop
+  endfacet
+endsolid anchor_case
