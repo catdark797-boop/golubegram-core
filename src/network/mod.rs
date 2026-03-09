@@ -11,6 +11,7 @@ pub mod burn_protocol;
 pub mod anti_trace;
 pub mod battery;
 pub mod anchor;
+pub mod infection;
 
 // Main network state machine and orchestration
 pub struct NetBroker {
