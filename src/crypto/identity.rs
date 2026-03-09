@@ -1,36 +1,29 @@
-use serde::{Serialize, Deserialize};
-use ed25519_dalek::{VerifyingKey, Signature};
+/// IDENTICONS: ED25519 Visual Representation
+/// Deterministically maps a raw public key to a geometric colored avatar.
 
-/// A physical or digital representation of a user identity
-#[derive(Debug, Serialize, Deserialize, Clone)]
-pub struct IdentityQr {
-    /// The public identity name (e.g., "Ivan.M")
-    pub name: String,
-    /// The public Ed25519 verification key from the Secure Enclave
-    pub public_key_hex: String,
-    /// A cryptographic signature proving ownership of this business card
-    pub signature_hex: String,
-}
+use sha2::{Sha256, Digest};
 
-impl IdentityQr {
-    /// Creates an invite link compatible with iOS/Android deep linking
-    pub fn to_invite_link(&self) -> String {
-        // Safe serialization for URLs (base64 or hex)
-        let payload = serde_json::to_string(self).unwrap_or_default();
-        let encoded = base64::encode(payload); // Simplification, standard base64 crate or custom
-        format!("golube://invite/{}", encoded)
+pub struct IdenticonGenerator;
+
+impl IdenticonGenerator {
+    /// Generates a visual identicon hash profile from a Public Key
+    pub fn generate_from_pubkey(ed25519_pubkey: &str) -> String {
+        let mut hasher = Sha256::new();
+        hasher.update(ed25519_pubkey);
+        let result = hasher.finalize();
+        
+        // Extract 3 bytes for RGB background color
+        let r = result[0];
+        let g = result[1];
+        let b = result[2];
+
+        // Extract 1 byte for geometric shape index
+        let shape_index = result[3] % 5;
+        let shapes = ["Circle", "Square", "Hexagon", "Triangle", "Diamond"];
+
+        let identicon_meta = format!("[Identicon: Color(#{:02x}{:02x}{:02x}), Shape({})]", r, g, b, shapes[shape_index as usize]);
+        println!("[IDENTITY] Generated minimal avatar for {}: {}", ed25519_pubkey, identicon_meta);
+        
+        identicon_meta
     }
-
-    /// Validates an incoming business card
-    pub fn verify(&self) -> bool {
-        // In reality, parse hex to VerifyingKey and verify the signature
-        // against the name format.
-        true // Stub logic
-    }
-}
-
-/// Web of Trust network graph node
-pub struct TrustNode {
-    pub identity: IdentityQr,
-    pub trust_level: u8, // 0-100
 }
