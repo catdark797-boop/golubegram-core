@@ -14,6 +14,7 @@ pub mod anchor;
 pub mod infection;
 pub mod tor_bridge;
 pub mod stego;
+pub mod ipfs_mesh;
 
 // Main network state machine and orchestration
 pub struct NetBroker {
