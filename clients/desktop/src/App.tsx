@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
-  const [isCatDark, setIsCatDark] = useState(false);
+  const [isGhostMode, setIsGhostMode] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
   const [peerCount, setPeerCount] = useState(0);
   const [qosTokens, setQosTokens] = useState(1500);
@@ -12,25 +12,28 @@ function App() {
   useEffect(() => {
     const timer = setInterval(() => {
       setIsConnected(true);
-      setPeerCount(Math.floor(Math.random() * 10) + 1);
-    }, 3000);
+      setPeerCount(Math.floor(Math.random() * 5) + 1);
+      setQosTokens((prev) => prev - Math.floor(Math.random() * 3));
+    }, 5000);
 
     return () => clearInterval(timer);
   }, []);
 
   const handleLogoTap = () => {
-    if (isCatDark) return;
-    const newTaps = logoTaps + 1;
-    setLogoTaps(newTaps);
-
-    if (newTaps >= 5) {
-      const pwd = window.prompt("KDF Context Entry:");
-      if (pwd === "hunter2") { // Mock valid password
-        setIsCatDark(true);
-        alert("[CAMOUFLAGE] Matryoshka Layer Shed. Mounting RAM-Drive...");
+    if (isGhostMode) return;
+    setLogoTaps((prev) => {
+      const newTaps = prev + 1;
+      if (newTaps >= 5) {
+        // Matryoshka camouflage trigger
+        const password = prompt("Enter Vault PIN");
+        if (password === "2024") {
+          setIsGhostMode(true);
+        } else if (password === "9999") {
+          alert("[DURESS PIN DETECTED] Zeroizing all cryptographic material...");
+        }
       }
-      setLogoTaps(0);
-    }
+      return newTaps;
+    });
   };
 
   const handleNukeNode = () => {
@@ -62,7 +65,7 @@ function App() {
     alert("Stealth Optics 120Hz Modulation Ready. Camera background sync is DISABLED per security policy.");
   }
 
-  if (!isCatDark) {
+  if (!isGhostMode) {
     if (showMarketplace) {
       return (
         <div className="App">
