@@ -128,7 +128,7 @@ fun MainMeshScreen() {
             Column(modifier = Modifier.align(Alignment.Center), horizontalAlignment = Alignment.CenterHorizontally) {
                 Text("КОМИКС-ГАЙД", color = Color.Yellow, fontSize = 24.sp, fontWeight = FontWeight.Bold)
                 Spacer(modifier = Modifier.height(16.dp))
-                Text("1. Нажми сюда.\n2. Установи MDM.\n3. Подтверди Swarm Root CA.", color = Color.White)
+                Text("1. Инициализация узла.\n2. Подтверждение сертификата.\n3. Вход в Рой.", color = Color.White)
                 Spacer(modifier = Modifier.height(16.dp))
                 Button(onClick = { showBabushkaMode = false }) { Text("ПОНЯТНО") }
             }
