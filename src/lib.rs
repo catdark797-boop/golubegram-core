@@ -12,6 +12,7 @@ pub mod ui;
 pub mod ai;
 pub mod sensors;
 pub mod features;
+pub mod hardware;
 pub mod security;
 
 /// Core initialization for Golubegram V1.0 (Ghost Release)
