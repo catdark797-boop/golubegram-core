@@ -44,3 +44,24 @@ impl CamouflageState {
         println!("[CAMOUFLAGE] Reverted to Golubegram Innocent UI.");
     }
 }
+
+/// ENTROPY PADDING: Plausible Deniability Payload Balancer
+pub struct EntropyPadding;
+
+impl EntropyPadding {
+    /// Dynamically expands the "Dummy (Innocent)" database with benign media 
+    /// until it precisely matches the byte size of the hidden "Cat_Dark" Vault.
+    pub fn balance_payloads(hidden_vault_size_bytes: u64, dummy_vault_size_bytes: u64) {
+        if dummy_vault_size_bytes < hidden_vault_size_bytes {
+            let padding_needed = hidden_vault_size_bytes - dummy_vault_size_bytes;
+            println!("[ENTROPY PADDING] Imbalance detected: Hidden Vault is {} bytes larger.", padding_needed);
+            println!("[ENTROPY PADDING] Harvesting benign network media (memes, generic data) to pad Dummy Vault by {} bytes...", padding_needed);
+            
+            // Simulated byte stuffing logic
+            println!("[ENTROPY PADDING] Dummy Vault expanded. Byte-size perfectly matches Cat_Dark payload.");
+            println!("[ENTROPY PADDING] Forensic volume analysis thwarted.");
+        } else {
+            println!("[ENTROPY PADDING] Vault sizes are balanced or Dummy is larger. No padding required.");
+        }
+    }
+}

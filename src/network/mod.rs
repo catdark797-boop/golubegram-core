@@ -17,6 +17,7 @@ pub mod stego;
 pub mod ipfs_mesh;
 pub mod eas_broadcast;
 pub mod ble_radar;
+pub mod mule_routing;
 
 // Main network state machine and orchestration
 pub struct NetBroker {
