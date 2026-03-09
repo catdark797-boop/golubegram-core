@@ -7,6 +7,7 @@ function App() {
   const [peerCount, setPeerCount] = useState(0);
   const [qosTokens, setQosTokens] = useState(1500);
   const [logoTaps, setLogoTaps] = useState(0);
+  const [showMarketplace, setShowMarketplace] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -62,6 +63,39 @@ function App() {
   }
 
   if (!isCatDark) {
+    if (showMarketplace) {
+      return (
+        <div className="App">
+          <header className="App-header">
+            <h2>P2P Маркетплейс (Swarm Drive)</h2>
+            <p style={{ fontSize: '14px', color: '#666' }}>Децентрализованная витрина. Хостинг через IPFS-шарды.</p>
+            <div style={{ textAlign: 'left', width: '80%', maxWidth: '600px', margin: '20px 0' }}>
+
+              <div style={{ border: '1px solid #ccc', padding: '15px', marginBottom: '15px', borderRadius: '8px', backgroundColor: '#f9f9f9', color: '#333' }}>
+                <h4 style={{ margin: '0 0 10px 0' }}>AnonPhone V3</h4>
+                <p style={{ margin: '0 0 10px 0', fontSize: '13px', color: '#888' }}>Источник: SWARM_URI://list_anonphone_v1</p>
+                <button className="innocent-btn" style={{ padding: '8px 15px', fontSize: '14px' }} onClick={() => alert("[ESCROW] 0% Fee Smart-Contract Initiated.\nSwarmCompute LLM is currently arbitrating the deal...")}>Купить (Escrow)</button>
+              </div>
+
+              <div style={{ border: '1px solid #ccc', padding: '15px', marginBottom: '15px', borderRadius: '8px', backgroundColor: '#f9f9f9', color: '#333' }}>
+                <h4 style={{ margin: '0 0 10px 0' }}>Mesh Antenna Kit</h4>
+                <p style={{ margin: '0 0 10px 0', fontSize: '13px', color: '#888' }}>Источник: SWARM_URI://list_antenna_v2</p>
+                <button className="innocent-btn" style={{ padding: '8px 15px', fontSize: '14px' }} onClick={() => alert("[ESCROW] 0% Fee Smart-Contract Initiated.\nSwarmCompute LLM is currently arbitrating the deal...")}>Купить (Escrow)</button>
+              </div>
+
+              <div style={{ border: '1px solid #ccc', padding: '15px', marginBottom: '15px', borderRadius: '8px', backgroundColor: '#f9f9f9', color: '#333' }}>
+                <h4 style={{ margin: '0 0 10px 0' }}>Encrypted Router</h4>
+                <p style={{ margin: '0 0 10px 0', fontSize: '13px', color: '#888' }}>Источник: SWARM_URI://list_router_v1</p>
+                <button className="innocent-btn" style={{ padding: '8px 15px', fontSize: '14px' }} onClick={() => alert("[ESCROW] 0% Fee Smart-Contract Initiated.\nSwarmCompute LLM is currently arbitrating the deal...")}>Купить (Escrow)</button>
+              </div>
+
+            </div>
+            <button className="innocent-btn" onClick={() => setShowMarketplace(false)}>Назад в Мессенджер</button>
+          </header>
+        </div>
+      );
+    }
+
     return (
       <div className="App">
         <header className="App-header">
@@ -72,6 +106,7 @@ function App() {
             <p>Коллег онлайн: {peerCount}</p>
           </div>
           <button className="innocent-btn">Открыть Чаты</button>
+          <button className="innocent-btn" style={{ marginTop: '15px', backgroundColor: '#4b7bec' }} onClick={() => setShowMarketplace(true)}>P2P Маркетплейс</button>
         </header>
       </div>
     );
