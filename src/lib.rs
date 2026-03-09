@@ -12,6 +12,8 @@ pub mod firmware;
 pub mod hardware;
 pub mod security;
 pub mod tactical;
+pub mod geo;
+pub mod commerce;
 
 /// Core initialization for Golubegram V1.0 (Ghost Release)
 pub fn init_core() {
