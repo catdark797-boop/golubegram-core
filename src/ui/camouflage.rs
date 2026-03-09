@@ -15,11 +15,23 @@ impl CamouflageState {
     }
 
     /// Triggered by the specific gesture + valid password hash
-    pub fn trigger_matryoshka(password_provided: bool) -> Result<(), &'static str> {
-        if password_provided {
-            // In a real scenario, this would check against the KDF offline hash.
+    /// Hash A (Real) unlocks network. Hash B (Duress) zeroizes keys and opens a dummy profile.
+    pub fn trigger_matryoshka(hash_provided: &str) -> Result<(), &'static str> {
+        let real_hash = "hashed_real_kdf_key"; // Mock: In reality, from secure storage
+        let duress_hash = "hashed_panic_kdf_key"; // Mock Vault Backup Key
+
+        if hash_provided == real_hash {
             UI_CAT_DARK_MODE.store(true, Ordering::SeqCst);
             println!("[CAMOUFLAGE] Matryoshka layers shed. Cat_Dark Enterprise UI activated.");
+            Ok(())
+        } else if hash_provided == duress_hash {
+            println!("[DURESS TRIGGERED] PANIC HASH ENTERED. INITIATING SCORCHED EARTH PROTOCOL.");
+            // 1. Wipe real SQLite keys
+            crate::crypto::hidden::panic_lock(); // Assuming this zeroizes keys 
+            
+            // 2. Open fake empty UI
+            UI_CAT_DARK_MODE.store(true, Ordering::SeqCst);
+            println!("[CAMOUFLAGE] Dummy Profile Loaded. Token Wallet: 0. Chats: Empty.");
             Ok(())
         } else {
             Err("Invalid Matryoshka trigger.")

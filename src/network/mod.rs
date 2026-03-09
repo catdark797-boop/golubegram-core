@@ -12,6 +12,8 @@ pub mod anti_trace;
 pub mod battery;
 pub mod anchor;
 pub mod infection;
+pub mod tor_bridge;
+pub mod stego;
 
 // Main network state machine and orchestration
 pub struct NetBroker {
