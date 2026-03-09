@@ -4,3 +4,4 @@ pub mod identity;
 pub mod encryption;
 pub mod keys;
 pub mod zkp;
+pub mod pow;
